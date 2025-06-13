@@ -1,5 +1,19 @@
-// ✅ Entry: Load Root Element
-const root = ReactDOM.createRoot(document.getElementById("root"));
+import React from "react";
+import ReactDOM from "react-dom";
+
+// 🧠 Auto-detect root API (React 17 vs 18)
+let rootRender;
+const rootElement = document.getElementById("root");
+
+try {
+  // If React 18: use createRoot
+  const { createRoot } = require("react-dom/client");
+  const root = createRoot(rootElement);
+  rootRender = root.render.bind(root);
+} catch (e) {
+  // If React 17: fallback to render
+  rootRender = (component) => ReactDOM.render(component, rootElement);
+}
 
 /* ------------------------------------------------------------------
  🧱 1. Basic Element Creation (Single h1)
@@ -57,7 +71,7 @@ button.addEventListener("click", () => {
     { id: "on-click" },
     React.createElement("h1", {}, "🎯 Replaced on Button Click!")
   );
-  root.render(clickedElement);
+  rootRender(clickedElement);
 });
 
 /* ------------------------------------------------------------------
@@ -69,23 +83,13 @@ setTimeout(() => {
     {},
     React.createElement("h1", {}, "⏱️ Replaced after 3s delay!")
   );
-  root.render(timeoutElement);
+  rootRender(timeoutElement);
 }, 3000);
 
 /* ------------------------------------------------------------------
  ✅ Initial Render (can swap to any variation above)
 ------------------------------------------------------------------- */
-root.render(nestedParent); // You can switch to siblingsParent, arrayParent, etc.
+rootRender(nestedParent); // Swap with siblingsParent or arrayParent if needed
 
 // 🧪 Debug Virtual DOM Element
 console.log("🔍 Virtual DOM (heading):", heading);
-
-/*
-🔎 Output Example:
-{
-  type: "h1",
-  props: {
-    children: "🌟 Hello World from React.createElement"
-  }
-}
-*/
