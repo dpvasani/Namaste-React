@@ -1,0 +1,10 @@
+#root, body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+#parent, #child, #siblings, #array-parent, #on-click {
+  border: 1px dashed gray;
+  padding: 10px;
+  margin-bottom: 10px;
+}
