@@ -1,8 +1,10 @@
 {
   "name": "episode02",
   "version": "1.0.0",
-  "description": "Namaste React By Darshan Vasani",
+  "description": "Namaste React By Darshan Vasani", 
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {
