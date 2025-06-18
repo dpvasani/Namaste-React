@@ -21,3 +21,4 @@ const contact=()=>{
 
 // Export the Contact component
 export default contact;
+

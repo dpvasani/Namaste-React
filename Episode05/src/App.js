@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 
 import About from "./components/About";
+import Error from "./components/Error";
 import Contact from "./components/Contact";
 
 // App Layout Component
@@ -47,6 +48,7 @@ const appRouter = createBrowserRouter([
   {
         path: "/",
         element: <Body />,
+        errorElement: <Error />,
   },
   {
         path: "/about",
