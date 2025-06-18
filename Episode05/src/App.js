@@ -1,73 +1,36 @@
 // app.js
 import React from "react";
-import Header from "./components/Header";
 import ReactDOM from "react-dom/client";
-import Body from "./components/Body";
 import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
 } from "react-router-dom";
 
+import Header from "./components/Header";
+import Body from "./components/Body";
 import About from "./components/About";
-import Error from "./components/Error";
 import Contact from "./components/Contact";
+import Error from "./components/Error";
 
-// App Layout Component
-const Applayout = () => {
-    return (
-      <div className="app">
+// App layout with shared Header
+const AppLayout = () => {
+  return (
+    <div className="app">
       <Header />
       <Outlet />
-      </div>
-    )
-  }
-
-// App
-// ├── Header
-// │   ├── Logo
-// │   └── Navigation
-// │       └── NavItem(s)
-// ├── Main (Body)
-// │   ├── SearchBar
-// │   └── RestaurantContainer
-// │       └── RestaurantCard(s)
-// └── Footer
-//     ├── Copyright
-//     ├── FooterLinks
-//     ├── Address
-//     └── ContactInfo
-
-//-----------------------------------------------------------------------------------------------------------
-
-// const appRouter = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <App />
-//   },
-//   {
-//         path: "/",
-//         element: <Body />,
-//         errorElement: <Error />,
-//   },
-//   {
-//         path: "/about",
-//         element: <About />,
-//   },
-//   {
-//         path: "/contact",
-//         element: <Contact />,
-//   }
-// ]);
+    </div>
+  );
+};
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <Applayout />,
-    children:[ 
+    element: <AppLayout />,
+    children: [
       {
         path: "/",
-        element: <Body />
+        element: <Body />,
       },
       {
         path: "/about",
@@ -77,12 +40,10 @@ const appRouter = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       }
-    ]
+    ],
+    errorElement: <Error />,
   }
 ]);
 
-
-
-// 📦 Render to DOM using React 18 method (since you're using Parcel, assume latest React)
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<RouterProvider router={appRouter} />);

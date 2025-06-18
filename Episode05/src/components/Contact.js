@@ -1,4 +1,4 @@
-const contact=()=>{
+const Contact=()=>{
     return (
         <div className="contact">
             <h1>Contact Page</h1>
@@ -20,5 +20,5 @@ const contact=()=>{
 }
 
 // Export the Contact component
-export default contact;
+export default Contact;
 
