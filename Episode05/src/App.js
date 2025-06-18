@@ -13,15 +13,7 @@ import About from "./components/About";
 import Error from "./components/Error";
 import Contact from "./components/Contact";
 
-// App Layout Component
-const App = () => {
-    return (
-      <div className="app">
-      <Header />
-      <Body />
-      </div>
-    )
-  }
+
 
 // App
 // ├── Header
@@ -40,23 +32,55 @@ const App = () => {
 
 //-----------------------------------------------------------------------------------------------------------
 
+// const appRouter = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />
+//   },
+//   {
+//         path: "/",
+//         element: <Body />,
+//         errorElement: <Error />,
+//   },
+//   {
+//         path: "/about",
+//         element: <About />,
+//   },
+//   {
+//         path: "/contact",
+//         element: <Contact />,
+//   }
+// ]);
+
+
+// App Layout Component
+const Applayout = () => {
+    return (
+      <div className="app">
+      <Header />
+      <Outlet />
+      </div>
+    )
+  }
+
 const appRouter = createBrowserRouter([
   {
     path: "/",
-    element: <App />
-  },
-  {
+    element: <Applayout />,
+    children:[ 
+      {
         path: "/",
-        element: <Body />,
-        errorElement: <Error />,
-  },
-  {
+        element: <Body />
+      },
+      {
         path: "/about",
         element: <About />,
-  },
-  {
+      },
+      {
         path: "/contact",
         element: <Contact />,
+      }
+    ]
   }
 ]);
 
