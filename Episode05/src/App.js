@@ -1,10 +1,26 @@
 // app.js
 import React from "react";
-import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
+import ReactDOM from "react-dom/client";
 import Body from "./components/Body";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+} from "react-router-dom";
 
+import About from "./components/About";
+import Contact from "./components/Contact";
 
+// App Layout Component
+const App = () => {
+    return (
+      <div className="app">
+      <Header />
+      <Body />
+      </div>
+    )
+  }
 
 // App
 // ├── Header
@@ -23,29 +39,27 @@ import Body from "./components/Body";
 
 //-----------------------------------------------------------------------------------------------------------
 
-
-  const App = () => {
-    return (
-      <div className="app">
-      <Header />
-      <Body />
-      </div>
-    )
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />
+  },
+  {
+        path: "/",
+        element: <Body />,
+  },
+  {
+        path: "/about",
+        element: <About />,
+  },
+  {
+        path: "/contact",
+        element: <Contact />,
   }
-
-
-
-
-
-
-
-
-
-
-
+]);
 
 
 
 // 📦 Render to DOM using React 18 method (since you're using Parcel, assume latest React)
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(<RouterProvider router={appRouter} />);
