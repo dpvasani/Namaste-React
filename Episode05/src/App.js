@@ -13,7 +13,15 @@ import About from "./components/About";
 import Error from "./components/Error";
 import Contact from "./components/Contact";
 
-
+// App Layout Component
+const Applayout = () => {
+    return (
+      <div className="app">
+      <Header />
+      <Outlet />
+      </div>
+    )
+  }
 
 // App
 // ├── Header
@@ -51,17 +59,6 @@ import Contact from "./components/Contact";
 //         element: <Contact />,
 //   }
 // ]);
-
-
-// App Layout Component
-const Applayout = () => {
-    return (
-      <div className="app">
-      <Header />
-      <Outlet />
-      </div>
-    )
-  }
 
 const appRouter = createBrowserRouter([
   {
