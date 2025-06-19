@@ -614,3 +614,81 @@ useEffect(() => {
 | Can we use `await` in cleanup? | ✅ Yes, but use an IIFE: `(async () => {})()`            |
 
 ---
+
+# 💡 React Class-Based Component – Multiple `state` Variables
+
+> 👨‍🏫 Equivalent to multiple `useState()` in functional components, but done with style in class components!
+
+---
+
+## 🚀 Full Example: Class Component with Multiple States
+
+```jsx
+import React from "react";
+
+class MultiStateExample extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // 🧠 Initialize multiple state variables
+    this.state = {
+      count: 0,            // 🔢 Number state
+      name: "Darshan",     // 👤 String state
+      isLoggedIn: false,   // 🔐 Boolean state
+    };
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>👤 Name: {this.state.name}</h2>
+        <h3>🔢 Count: {this.state.count}</h3>
+        <h4>🔐 Logged In: {this.state.isLoggedIn ? "✅ Yes" : "❌ No"}</h4>
+
+        <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+          ➕ Increment Count
+        </button>
+
+        <button onClick={() => this.setState({ isLoggedIn: !this.state.isLoggedIn })}>
+          🔄 Toggle Login
+        </button>
+      </div>
+    );
+  }
+}
+
+export default MultiStateExample;
+```
+
+---
+
+## 📌 Key Concepts Recap
+
+| 🧠 Concept                 | ✅ Code Example                                      | 💬 Explanation                                  |
+| -------------------------- | --------------------------------------------------- | ----------------------------------------------- |
+| Single State Object        | `this.state = { count: 0, name: "..." }`            | All states live inside **one object**           |
+| Update One Field Only      | `this.setState({ count: newCount })`                | React **auto-merges** this field into the state |
+| No Need to Spread Manually | No need for `{ ...prevState }` like in `useState()` | Class state is smart, no spread required! 🤓    |
+
+---
+
+## 🔁 Functional Component Equivalent
+
+```jsx
+const [count, setCount] = useState(0);
+const [name, setName] = useState("Darshan");
+const [isLoggedIn, setIsLoggedIn] = useState(false);
+```
+
+🆚 In **function components**, each `useState()` call manages one value individually.
+In **class components**, everything lives inside `this.state` 🏠.
+
+---
+
+## 🎯 Quick Reminders
+
+* ✅ `setState()` only **updates the specific property**, no full overwrite needed.
+* 🧽 Ideal for grouped values that logically belong together (like form data).
+* 🔥 Cleaner than using multiple `useState()` in simple scenarios.
+
+---
