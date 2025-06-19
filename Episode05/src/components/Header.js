@@ -1,6 +1,7 @@
 import { LOGO_URL } from "../utils/constant";
 import { useState } from "react";
 import { NavLink, Link, useParams } from "react-router-dom";
+import './RestaurentMenu.css';
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("Login");
