@@ -13,6 +13,7 @@ import Body from "./components/Body";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
+import RestaurentMenu from "./components/RestaurentMenu";
 
 // App layout with shared Header
 const AppLayout = () => {
@@ -40,6 +41,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path:"/restaurant/:resId",
+        element: <RestaurentMenu />,
       }
     ],
     errorElement: <Error />,
