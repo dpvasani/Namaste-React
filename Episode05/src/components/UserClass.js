@@ -8,7 +8,7 @@ class UserClass extends React.Component {
     this.state = {
       name: "Darshan Vasani",
       age: 22,
-      location: "Surat, Gujarat",
+      location: "Ahmedabad, Gujarat",
       avatar_url: "",
       bio: "",
     };
@@ -22,23 +22,27 @@ class UserClass extends React.Component {
     // Update the state with data from GitHub
     this.setState({
       name: data.name || "Darshan Vasani",
-      location: data.location || "Surat, Gujarat",
+      location: data.location || "Ahmedabad, Gujarat",
       avatar_url: data.avatar_url,
       bio: data.bio || "",
     });
   }
 
   render() {
-    const { name, age, location, avatar_url, bio } = this.state;
+    const { name, location, avatar_url, bio } = this.state;
 
     return (
-      <div className="user-card" style={{ border: "1px solid #ccc", padding: "20px", borderRadius: "8px", maxWidth: "300px" }}>
-        <h1>👤 GitHub User</h1>
-        {avatar_url && <img src={avatar_url} alt="avatar" width="150" style={{ borderRadius: "8px" }} />}
-        <h2>Name: {name}</h2>
-        <h2>Age: {age}</h2>
-        <h2>Location: {location}</h2>
-        {bio && <p>📝 Bio: {bio}</p>}
+      <div className="user-card user-card-horizontal">
+        {avatar_url && (
+          <div className="user-card-photo">
+            <img src={avatar_url} alt="avatar" width="110" />
+          </div>
+        )}
+        <div className="user-card-details">
+          <div className="user-detail-row"><span className="user-detail-key">Name:</span> <span className="user-detail-value">{name}</span></div>
+          <div className="user-detail-row"><span className="user-detail-key">Location:</span> <span className="user-detail-value">{location}</span></div>
+          {bio && <div className="user-detail-row"><span className="user-detail-key">Bio:</span> <span className="user-detail-value user-bio">{bio}</span></div>}
+        </div>
       </div>
     );
   }
