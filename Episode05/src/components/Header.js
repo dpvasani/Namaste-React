@@ -1,6 +1,6 @@
 import { LOGO_URL } from "../utils/constant";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("Login");
@@ -8,7 +8,9 @@ const Header = () => {
   return (
     <div className="header">
       <div className="logo-container">
-        <img className="logo" src={LOGO_URL} alt="App Logo" />
+        <Link to="/">
+          <img className="logo" src={LOGO_URL} alt="App Logo" />
+        </Link>
       </div>
 
       <div className="nav-items">
@@ -35,7 +37,7 @@ const Header = () => {
               {btnNameReact}
             </button>
           </li>
-        </ul>
+        </ul> 
       </div>
     </div>
   );
