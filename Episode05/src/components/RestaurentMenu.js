@@ -1,43 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { CDN_URL, MENU_API_URL } from "../utils/constant";
+import { CDN_URL } from "../utils/constant";
 import Shimmer from "./Shimmer";
 import "./RestaurentMenu.css";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RestaurentMenu = () => {
   const { resId } = useParams();
-  const [restInfo, setRestInfo] = useState(null);
+  const { restaurant, menuSections, loading } = useRestaurantMenu(resId);
 
-  useEffect(() => {
-    fetchMenu();
-    // eslint-disable-next-line
-  }, [resId]);
-
-  const fetchMenu = async () => {
-    const data = await fetch(MENU_API_URL + resId);
-    const json = await data.json();
-    setRestInfo(json?.data);
-  };
-
-  if (!restInfo) return <Shimmer />;
-
-  // Extract restaurant info
-  const restaurant = restInfo?.cards?.find(
-    (c) => c?.card?.card?.info?.name
-  )?.card?.card?.info;
-
-  const menuCards =
-    restInfo?.cards
-      ?.find((c) => c.groupedCard?.cardGroupMap?.REGULAR)
-      ?.groupedCard.cardGroupMap.REGULAR.cards || [];
-
-  // Get all menu items grouped by section
-  const menuSections = menuCards
-    .filter((c) => c.card?.card?.title && c.card?.card?.itemCards)
-    .map((section) => ({
-      title: section.card.card.title,
-      items: section.card.card.itemCards,
-    }));
+  if (loading) return <Shimmer />;
 
   return (
     <div className="menu-container">
