@@ -19,7 +19,7 @@ const Header = () => {
 
       <div className="nav-items">
         <ul>
-          <li>Online Status: {onlineStatus ? "✅" : "🔴"}</li>
+          <li className="px-6 py-3 text-white font-semibold text-sm rounded-full uppercase tracking-wide bg-white/15 border border-white/20 shadow-lg transition-all duration-300 transform hover:bg-white/25 hover:shadow-xl hover:-translate-y-1">Online Status: {onlineStatus ? "✅" : "🔴"}</li>
           <li>
             <NavLink to="/grocery" className={({ isActive }) => isActive ? "active" : ""}>Grocery</NavLink>
           </li>

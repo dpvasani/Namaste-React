@@ -1,5 +1,5 @@
 /* Modern and Beautiful Styling */
-
+@import "tailwindcss";
 /* Header/Navbar Styling - Enhanced */
 .header {
     display: flex;
