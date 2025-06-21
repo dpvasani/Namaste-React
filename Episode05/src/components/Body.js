@@ -2,6 +2,7 @@ import {React, useEffect, useState } from 'react';
 import RestaurantCard from './RestaurantCard';
 import resList from '../utils/mockData';
 import Shimmer from "./Shimmer";
+import useOnlineStatus from '../utils/useOnlineStatus';
 
 
 const Body = () => {
@@ -71,12 +72,16 @@ const Body = () => {
   // Handle search functionality
   const handleSearch = () => {
     if (!listOfRestaurants || listOfRestaurants.length === 0) return;
-    
+    if (!searchText.trim()) {
+      setFilteredRestaurant(listOfRestaurants);
+      setCurrentPage(1);
+      return;
+    }
     const filtered = listOfRestaurants.filter((res) =>
-      res.info.name.toLowerCase().includes(searchText.toLowerCase())
+      res.info.name?.toLowerCase().includes(searchText.toLowerCase())
     );
     setFilteredRestaurant(filtered);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   // Handle top rated filter
@@ -161,9 +166,22 @@ const Body = () => {
     return pageNumbers;
   };
 
-  return listOfRestaurants?.length === 0 ? (
-    <Shimmer />
-  ) : (
+  const onlineStatus = useOnlineStatus();
+
+  if (!onlineStatus) {
+    return (
+      <div className="offline-message">
+        <h2>You are offline!</h2>
+        <p>Please check your internet connection.</p>
+      </div>
+    );
+  }
+
+  if (listOfRestaurants?.length === 0) {
+    return <Shimmer />;
+  }
+
+  return (
     <div className="body">
       <div className="filter">
         <div className="search">
@@ -207,7 +225,7 @@ const Body = () => {
       <div className="res-container">
         {currentRestaurants && currentRestaurants.length > 0 ? (
           currentRestaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+            <RestaurantCard key={restaurant.info.id || restaurant.info.name} resData={restaurant} />
           ))
         ) : (
           <div className="no-results">
