@@ -1,5 +1,5 @@
 // app.js
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -14,6 +14,12 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurentMenu from "./components/RestaurentMenu";
+import Grocery from "./components/Grocery";
+import Shimmer from "./components/Shimmer";
+
+
+const Grocery = lazy(() => import("./components/Grocery"));
+// const Grocerry = lazy(() => import("path"));
 
 // App layout with shared Header
 const AppLayout = () => {
@@ -45,6 +51,10 @@ const appRouter = createBrowserRouter([
       {
         path:"/restaurant/:resId",
         element: <RestaurentMenu />,
+      },
+      {
+        path: "/grocery",
+        element: <Suspense fallback={<Shimmer />}><Grocery /> </Suspense> ,
       }
     ],
     errorElement: <Error />,

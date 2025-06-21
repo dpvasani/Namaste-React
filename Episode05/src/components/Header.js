@@ -2,9 +2,12 @@ import { LOGO_URL } from "../utils/constant";
 import { useState } from "react";
 import { NavLink, Link, useParams } from "react-router-dom";
 import './RestaurentMenu.css';
+import useOnlineStatus from '../utils/useOnlineStatus';
+
 
 const Header = () => {
   const [btnNameReact, setBtnNameReact] = useState("Login");
+  const onlineStatus= useOnlineStatus();
 
   return (
     <div className="header">
@@ -16,6 +19,10 @@ const Header = () => {
 
       <div className="nav-items">
         <ul>
+          <li>Online Status: {onlineStatus ? "✅" : "🔴"}</li>
+          <li>
+            <NavLink to="/grocery" className={({ isActive }) => isActive ? "active" : ""}>Grocery</NavLink>
+          </li>
           <li>
             <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink>
           </li>
