@@ -1,8 +1,11 @@
 import {React, useEffect, useState } from 'react';
-import {RestaurantCard, withPromotedLabel} from './RestaurantCard';
+import { RestaurantCard } from './RestaurantCard';
 import resList from '../utils/mockData';
 import Shimmer from "./Shimmer";
 import useOnlineStatus from '../utils/useOnlineStatus';
+import withRestaurantBadges from '../hocs/withRestaurantBadges';
+import withFilteredRestaurants from '../hocs/withFilteredRestaurants';
+import RestaurantList from './RestaurantList';
 
 
 const Body = () => {
@@ -13,8 +16,14 @@ const Body = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [restaurantsPerPage] = useState(20);
 
-  // Higher Order Component to add promoted label
-  const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
+  // Higher Order Component to add badges
+  const RestaurantCardWithBadges = withRestaurantBadges(RestaurantCard);
+
+  // Create a new component for a featured section
+  const FeaturedRestaurantList = withFilteredRestaurants({
+    withDiscounts: true,
+    sortBy: { key: 'avgRating', ascending: false }
+  })(RestaurantList);
 
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
   console.log("Body Rendered",listOfRestaurants);
@@ -228,7 +237,7 @@ const Body = () => {
       <div className="res-container">
         {currentRestaurants && currentRestaurants.length > 0 ? (
           currentRestaurants.map((restaurant) => (
-            restaurant.info.promoted ? <PromotedRestaurantCard key={restaurant.info.id || restaurant.info.name} resData={restaurant}/> : <RestaurantCard key={restaurant.info.id || restaurant.info.name} resData={restaurant} />
+            <RestaurantCardWithBadges key={restaurant.info.id || restaurant.info.name} resData={restaurant} />
           ))
         ) : (
           <div className="no-results">
@@ -279,6 +288,12 @@ const Body = () => {
           </div>
         </div>
       )}
+
+      {/* Featured Section */}
+      <div className="featured-section">
+          <h2 style={{textAlign: 'center', margin: '20px', fontSize: '2em'}}>Restaurants With Great Discounts!</h2>
+          <FeaturedRestaurantList restaurants={listOfRestaurants} />
+      </div>
     </div>
   );
 };
