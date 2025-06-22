@@ -1,5 +1,5 @@
 import {React, useEffect, useState } from 'react';
-import RestaurantCard from './RestaurantCard';
+import {RestaurantCard, withPromotedLabel} from './RestaurantCard';
 import resList from '../utils/mockData';
 import Shimmer from "./Shimmer";
 import useOnlineStatus from '../utils/useOnlineStatus';
@@ -13,8 +13,11 @@ const Body = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [restaurantsPerPage] = useState(20);
 
+  // Higher Order Component to add promoted label
+  const PromotedRestaurantCard = withPromotedLabel(RestaurantCard);
+
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-  console.log("Body Rendered");
+  console.log("Body Rendered",listOfRestaurants);
 
   useEffect(() => {
     fetchData();
@@ -225,7 +228,7 @@ const Body = () => {
       <div className="res-container">
         {currentRestaurants && currentRestaurants.length > 0 ? (
           currentRestaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.info.id || restaurant.info.name} resData={restaurant} />
+            restaurant.info.promoted ? <PromotedRestaurantCard key={restaurant.info.id || restaurant.info.name} resData={restaurant}/> : <RestaurantCard key={restaurant.info.id || restaurant.info.name} resData={restaurant} />
           ))
         ) : (
           <div className="no-results">
