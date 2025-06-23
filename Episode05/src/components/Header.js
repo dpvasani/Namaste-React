@@ -1,13 +1,26 @@
 import { LOGO_URL } from "../utils/constant";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { NavLink, Link, useParams } from "react-router-dom";
 import './RestaurentMenu.css';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import { UserContext} from "../utils/UserContext";
 
 
 const Header = () => {
-  const [btnNameReact, setBtnNameReact] = useState("Login");
   const onlineStatus= useOnlineStatus();
+  const { user, setUser } = useContext(UserContext);
+
+  const handleAuth = () => {
+    if (user) {
+      setUser(null);
+    } else {
+      setUser({
+        name: 'John Doe',
+        email: 'john@example.com',
+        avatar: 'https://i.pravatar.cc/40?img=3',
+      });
+    }
+  };
 
   return (
     <div className="header">
@@ -37,12 +50,10 @@ const Header = () => {
           </li>
           <li>
             <button
-              className={btnNameReact === "Login" ? "login" : "logout"}
-              onClick={() =>
-                setBtnNameReact(prev => prev === "Login" ? "Logout" : "Login")
-              }
+              className={user ? "logout" : "login"}
+              onClick={handleAuth}
             >
-              {btnNameReact}
+              {user ? "Logout" : "Login"}
             </button>
           </li>
         </ul> 

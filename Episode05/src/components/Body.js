@@ -1,4 +1,4 @@
-import {React, useEffect, useState } from 'react';
+import {React, useEffect, useState, useContext } from 'react';
 import { RestaurantCard } from './RestaurantCard';
 import resList from '../utils/mockData';
 import Shimmer from "./Shimmer";
@@ -6,6 +6,7 @@ import useOnlineStatus from '../utils/useOnlineStatus';
 import withRestaurantBadges from '../hocs/withRestaurantBadges';
 import withFilteredRestaurants from '../hocs/withFilteredRestaurants';
 import RestaurantList from './RestaurantList';
+import { UserContext } from '../utils/UserContext';
 
 
 const Body = () => {
@@ -176,6 +177,7 @@ const Body = () => {
   };
 
   const onlineStatus = useOnlineStatus();
+  const { user, setUser } = useContext(UserContext);
 
   if (!onlineStatus) {
     return (
@@ -193,24 +195,42 @@ const Body = () => {
   return (
     <div className="body">
       <div className="filter">
-        <div className="search">
-          <input
-            type="text"
-            className="search-box"
-            value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-            placeholder="Search for restaurants..."
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                handleSearch();
-              }
-            }}
-          />
-          <button onClick={handleSearch}>
-            Search
-          </button>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="search flex-1">
+            <input
+              type="text"
+              className="search-box"
+              value={searchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
+              }}
+              placeholder="Search for restaurants..."
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
+            />
+            <button onClick={handleSearch}>
+              Search
+            </button>
+          </div>
+          {/* User Info */}
+          {user && (
+            <div className="flex flex-col items-end">
+              <div className="flex items-center bg-white rounded-lg shadow px-3 py-2 gap-2 border border-gray-200 mb-1">
+                <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full border-2 border-indigo-400" />
+                <div className="text-sm font-semibold text-gray-700">{user.name}</div>
+              </div>
+              <input
+                type="text"
+                className="border px-2 py-1 rounded text-sm focus:outline-none focus:ring focus:border-indigo-400"
+                value={user.name}
+                onChange={e => setUser({ ...user, name: e.target.value })}
+                placeholder="Change user name"
+              />
+            </div>
+          )}
         </div>
         <div className="filter-buttons">
           <button

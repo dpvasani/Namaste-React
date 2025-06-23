@@ -16,6 +16,7 @@ import Error from "./components/Error";
 import RestaurentMenu from "./components/RestaurentMenu";
 import Grocery from "./components/Grocery";
 import Shimmer from "./components/Shimmer";
+import { UserProvider } from "./utils/UserContext";
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -62,4 +63,8 @@ const appRouter = createBrowserRouter([
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter} />);
+root.render(
+  <UserProvider>
+    <RouterProvider router={appRouter} />
+  </UserProvider>
+);
