@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { CDN_URL } from "../utils/constant";
 import Shimmer from "./Shimmer";
@@ -8,6 +8,11 @@ import useRestaurantMenu from "../utils/useRestaurantMenu";
 const RestaurentMenu = () => {
   const { resId } = useParams();
   const { restaurant, menuSections, loading } = useRestaurantMenu(resId);
+  const [openSectionIndex, setOpenSectionIndex] = useState(0);
+
+  const toggleSection = (index) => {
+    setOpenSectionIndex(openSectionIndex === index ? -1 : index);
+  };
 
   if (loading) return <Shimmer />;
 
@@ -35,10 +40,13 @@ const RestaurentMenu = () => {
       </div>
 
       {/* Menu Sections */}
-      {menuSections.map((section) => (
+      {menuSections.map((section, index) => (
         <div className="menu-section" key={section.title}>
-          <div className="menu-section-title">{section.title}</div>
-          <div className="menu-items-list">
+          <div className="menu-section-title" onClick={() => toggleSection(index)}>
+            <span>{section.title} ({section.items.length})</span>
+            <span>{openSectionIndex === index ? '🔼' : '🔽'}</span>
+          </div>
+          <div className={`menu-items-list ${openSectionIndex === index ? '' : 'collapsed'}`}>
             {section.items.map((item) => {
               const info = item.card.info;
               return (
