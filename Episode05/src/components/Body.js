@@ -26,7 +26,7 @@ const Body = () => {
   })(RestaurantList);
 
   // Whenever state variables update, react triggers a reconciliation cycle(re-renders the component)
-  console.log("Body Rendered",listOfRestaurants);
+  
 
   useEffect(() => {
     fetchData();
@@ -66,14 +66,11 @@ const Body = () => {
         index === self.findIndex(r => r.info?.id === restaurant.info?.id)
       );
       
-      console.log("API Response:", json);
-      console.log("Total restaurants found:", uniqueRestaurants.length);
       
       setListOfRestraunt(uniqueRestaurants);
       setFilteredRestaurant(uniqueRestaurants);
       setCurrentPage(1); // Reset to first page when new data loads
     } catch (error) {
-      console.log("Error fetching data:", error);
       // Fallback to mock data if API fails
       setListOfRestraunt(resList);
       setFilteredRestaurant(resList);
