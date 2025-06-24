@@ -17,6 +17,7 @@ import RestaurentMenu from "./components/RestaurentMenu";
 import Grocery from "./components/Grocery";
 import Shimmer from "./components/Shimmer";
 import { UserProvider } from "./utils/UserContext";
+import Cart from "./components/Cart";
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -48,6 +49,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
       {
         path:"/restaurant/:resId",
