@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { CDN_URL } from "../utils/constant";
 import Shimmer from "./Shimmer";
@@ -6,11 +6,12 @@ import "./RestaurentMenu.css";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import { useDispatch } from "react-redux";
 import { addItem } from "../Store/cartSlice";
+import { showToast } from "../utils/useToast";
 
 const RestaurentMenu = () => {
   const { resId } = useParams();
   const { restaurant, menuSections, loading } = useRestaurantMenu(resId);
-  const [openSectionIndex, setOpenSectionIndex] = useState(0)
+  const [openSectionIndex, setOpenSectionIndex] = React.useState(0);
 
   const toggleSection = (index) => {
     setOpenSectionIndex(openSectionIndex === index ? -1 : index);
@@ -19,16 +20,24 @@ const RestaurentMenu = () => {
   const dispatch = useDispatch();
 
   const handleAddToCart = (item) => {
-    // Dispatch the addItem action to the Redux store
-    dispatch(addItem(item));
-    // Optionally, you can show a toast or notification here
-    console.log("Item added to cart:",item);
-  }
+    const info = item.card.info;
+    const cartItem = {
+      id: info.id,
+      name: info.name,
+      price: info.price,
+      defaultPrice: info.defaultPrice,
+      imageId: info.imageId,
+      description: info.description,
+    };
+    dispatch(addItem(cartItem));
+    showToast('Added to cart!', 'success');
+    console.log("Item added to cart:", cartItem);
+  };
 
   if (loading) return <Shimmer />;
 
   return (
-    <div className="menu-container">
+    <div className="menu-container relative">
       {/* Hero Section */}
       <div className="menu-header">
         {restaurant?.cloudinaryImageId && (
@@ -85,7 +94,7 @@ const RestaurentMenu = () => {
                   </div>
                   <div className="flex justify-center mt-4">
                     <button
-                      className="add-to-cart-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow transition duration-200 ease-in-out"
+                      className="add-to-cart-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow transition duration-200 ease-in-out cursor-pointer"
                       onClick={()=> handleAddToCart(item)}
                     >
                       Add +

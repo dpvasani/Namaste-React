@@ -20,6 +20,7 @@ import { UserProvider } from "./utils/UserContext";
 import Cart from "./components/Cart";
 import { Provider } from "react-redux";
 import appStore from "./Store/appStore";
+import Toast from './components/Toast';
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -31,6 +32,7 @@ const AppLayout = () => {
     <div className="app">
       <Header />
       <Outlet />
+      <Toast />
     </div>
   );
 };
