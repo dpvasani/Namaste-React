@@ -14,7 +14,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurentMenu from "./components/RestaurentMenu";
-import Grocery from "./components/Grocery";
+// import Grocery from "./components/Grocery";
 import Shimmer from "./components/Shimmer";
 import { UserProvider } from "./utils/UserContext";
 import Cart from "./components/Cart";
