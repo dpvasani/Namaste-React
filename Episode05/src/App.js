@@ -21,6 +21,7 @@ import Cart from "./components/Cart";
 import { Provider } from "react-redux";
 import appStore from "./Store/appStore";
 import Toast from './components/Toast';
+import ErrorBoundary from './components/ErrorBoundary';
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -29,11 +30,17 @@ const Grocery = lazy(() => import("./components/Grocery"));
 // App layout with shared Header
 const AppLayout = () => {
   return (
-    <div className="app">
-      <Header />
-      <Outlet />
-      <Toast />
-    </div>
+    <Provider store={appStore}>
+      <UserProvider>
+        <div className="app">
+          <Header />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
+          <Toast />
+        </div>
+      </UserProvider>
+    </Provider>
   );
 };
 
@@ -59,12 +66,16 @@ const appRouter = createBrowserRouter([
         element: <Cart />,
       },
       {
-        path:"/restaurant/:resId",
+        path: "/restaurant/:resId",
         element: <RestaurentMenu />,
       },
       {
         path: "/grocery",
-        element: <Suspense fallback={<Shimmer />}><Grocery /> </Suspense> ,
+        element: (
+          <Suspense fallback={<Shimmer />}>
+            <Grocery />
+          </Suspense>
+        ),
       }
     ],
     errorElement: <Error />,
@@ -73,10 +84,5 @@ const appRouter = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
-  <Provider store={appStore}>
-  <UserProvider>
-    <RouterProvider router={appRouter} />
-  </UserProvider>
-  </Provider>
+  <RouterProvider router={appRouter} />
 );
