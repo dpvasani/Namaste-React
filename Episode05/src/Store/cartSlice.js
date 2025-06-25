@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const cartSlice = createSlice({
   name: 'cart',
     initialState: {
-        items: ["Burger", "Pizza", "Pasta"], // Initial state of the cart
-        totalItems: 3,
-        totalPrice: 100,
+        items: [], // Initial state of the cart
+        totalItems: 0,
+        totalPrice: 0,
     },
     reducers: {
         // Reducer Again an Object with key-value pairs

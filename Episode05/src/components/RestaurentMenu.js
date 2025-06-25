@@ -4,11 +4,14 @@ import { CDN_URL } from "../utils/constant";
 import Shimmer from "./Shimmer";
 import "./RestaurentMenu.css";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import { useDispatch } from "react-redux";
+import { addItem } from "../Store/cartSlice";
 
 const RestaurentMenu = () => {
   const { resId } = useParams();
   const { restaurant, menuSections, loading } = useRestaurantMenu(resId);
   const [openSectionIndex, setOpenSectionIndex] = useState(0);
+  const dispatch = useDispatch();
 
   const toggleSection = (index) => {
     setOpenSectionIndex(openSectionIndex === index ? -1 : index);
@@ -50,25 +53,35 @@ const RestaurentMenu = () => {
             {section.items.map((item) => {
               const info = item.card.info;
               return (
-                <div className="menu-item-card" key={info.id}>
-                  {info.imageId && (
-                    <img
-                      className="menu-item-img"
-                      src={CDN_URL + info.imageId}
-                      alt={info.name}
-                    />
-                  )}
-                  <div className="menu-item-title">
-                    {info.name} {info.isVeg ? <span title="Veg">🥦</span> : <span title="Non-Veg">🍗</span>}
-                    {info.isBestseller && (
-                      <span style={{ marginLeft: 8, color: "#ff9800", fontWeight: 700, fontSize: "0.9em" }}>★ Bestseller</span>
+                <div className="menu-item-card flex flex-col justify-between items-stretch" key={info.id}>
+                  <div className="flex-1">
+                    {info.imageId && (
+                      <img
+                        className="menu-item-img"
+                        src={CDN_URL + info.imageId}
+                        alt={info.name}
+                      />
                     )}
+                    <div className="menu-item-title">
+                      {info.name} {info.isVeg ? <span title="Veg">🥦</span> : <span title="Non-Veg">🍗</span>}
+                      {info.isBestseller && (
+                        <span style={{ marginLeft: 8, color: "#ff9800", fontWeight: 700, fontSize: "0.9em" }}>★ Bestseller</span>
+                      )}
+                    </div>
+                    <div className="menu-item-desc">
+                      {info.description ? info.description.slice(0, 80) + (info.description.length > 80 ? "..." : "") : "No description."}
+                    </div>
+                    <div className="menu-item-price">
+                      ₹{info.price / 100 || info.defaultPrice / 100 || "-"}
+                    </div>
                   </div>
-                  <div className="menu-item-desc">
-                    {info.description ? info.description.slice(0, 80) + (info.description.length > 80 ? "..." : "") : "No description."}
-                  </div>
-                  <div className="menu-item-price">
-                    ₹{info.price / 100 || info.defaultPrice / 100 || "-"}
+                  <div className="flex justify-center mt-4">
+                    <button
+                      className="add-to-cart-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow transition duration-200 ease-in-out"
+                      
+                    >
+                      Add +
+                    </button>
                   </div>
                 </div>
               );
