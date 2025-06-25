@@ -18,6 +18,8 @@ import Grocery from "./components/Grocery";
 import Shimmer from "./components/Shimmer";
 import { UserProvider } from "./utils/UserContext";
 import Cart from "./components/Cart";
+import { Provider } from "react-redux";
+import appStore from "./Store/appStore";
 
 
 const Grocery = lazy(() => import("./components/Grocery"));
@@ -69,7 +71,10 @@ const appRouter = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
+
+  <Provider store={appStore}>
   <UserProvider>
     <RouterProvider router={appRouter} />
   </UserProvider>
+  </Provider>
 );
