@@ -4,11 +4,18 @@ import { NavLink, Link, useParams } from "react-router-dom";
 import './RestaurentMenu.css';
 import useOnlineStatus from '../utils/useOnlineStatus';
 import { UserContext} from "../utils/UserContext";
+import { useSelector } from "react-redux";
 
 
 const Header = () => {
   const onlineStatus= useOnlineStatus();
   const { user, setUser } = useContext(UserContext);
+  // Selector To Read Value From Store
+
+  // Subscribing To The Store Using useSelector
+  // This will re-render the component whenever the value of cart changes
+  // useSelector is a hook that allows you to extract data from the Redux store state
+  const items = useSelector((store) => store.cart.items || []);
 
   const handleAuth = () => {
     if (user) {
@@ -46,7 +53,7 @@ const Header = () => {
             <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>Contact</NavLink>
           </li>
           <li>
-            <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>Cart</NavLink>
+            <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>Cart- {items.length}</NavLink>
           </li>
           <li>
             <button
