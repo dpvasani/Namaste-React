@@ -10,12 +10,20 @@ import { addItem } from "../Store/cartSlice";
 const RestaurentMenu = () => {
   const { resId } = useParams();
   const { restaurant, menuSections, loading } = useRestaurantMenu(resId);
-  const [openSectionIndex, setOpenSectionIndex] = useState(0);
-  const dispatch = useDispatch();
+  const [openSectionIndex, setOpenSectionIndex] = useState(0)
 
   const toggleSection = (index) => {
     setOpenSectionIndex(openSectionIndex === index ? -1 : index);
   };
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (item) => {
+    // Dispatch the addItem action to the Redux store
+    dispatch(addItem(item));
+    // Optionally, you can show a toast or notification here
+    console.log("Item added to cart:",item);
+  }
 
   if (loading) return <Shimmer />;
 
@@ -78,7 +86,7 @@ const RestaurentMenu = () => {
                   <div className="flex justify-center mt-4">
                     <button
                       className="add-to-cart-btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow transition duration-200 ease-in-out"
-                      
+                      onClick={()=> handleAddToCart(item)}
                     >
                       Add +
                     </button>

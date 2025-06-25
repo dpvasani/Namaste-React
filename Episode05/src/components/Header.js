@@ -53,7 +53,7 @@ const Header = () => {
             <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>Contact</NavLink>
           </li>
           <li>
-            <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>Cart- {items.length}</NavLink>
+            <NavLink to="/cart" className={({ isActive }) => isActive ? "active" : ""}>Cart- ({items.length})</NavLink>
           </li>
           <li>
             <button
